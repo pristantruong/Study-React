@@ -5,15 +5,19 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+ 		<nav className="navbar navbar-inverse">
+ 			<div className="container-fluid">
+ 				<a className="navbar-brand" href="#">Title</a>
+ 				<ul className="nav navbar-nav">
+ 					<li className="active">
+ 						<a href="#">Home</a>
+ 					</li>
+ 					<li>
+ 						<a href="#">Link</a>
+ 					</li>
+ 				</ul>
+ 			</div>
+ 		</nav>
     );
   }
 }
