@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import Product from './components/Product'
 class App extends Component {
+	onClick(){
+		console.log('Clicked!'); 
+	}
+
+	onClick2(text){
+		console.log(text);
+	}
+
 	render() {
 		var products = [
 			{
@@ -23,7 +31,7 @@ class App extends Component {
 				name: "Name 3",
 				price: 333333,
 				image: "https://secure.gravatar.com/avatar/55e6d6691bd939bcd5d735f9aaf47630?d=https://www.gamedev.net/uploads/monthly_2017_08/M.png.dee20e8eb1c60318f45411505f7fb6dc.png",
-				status: false
+				status: false 	
 			}
 		];
 		let elements = products.map((product, index) => {
@@ -51,7 +59,18 @@ class App extends Component {
 						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							{elements}
 						</div>
-
+						
+						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							{/* Truyền k tham số */}
+							<button type="button" className="btn btn-default" onClick= {this.onClick}>
+								Click
+							</button>
+							{/* Truyền có tham số => phải sử dụng arrow function*/}
+							<button type="button" className="btn btn-default" onClick={() => this.onClick2('Click 2')}>
+								Click 2
+							</button>
+						</div>
+						
 					</div>
 
 
