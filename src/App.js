@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import './App.css';
 import Product from './components/Product'
 class App extends Component {
-	onClick(){
-		console.log('Clicked!'); 
+	onClick() {
+		console.log('Clicked!');
 	}
 
-	onClick2(text){
+	onClick2(text) {
 		console.log(text);
+	}
+	// .name là key (phần khai báo ở input)
+	// .value để lấy giá trị từ ref
+	onAddProduct = () =>{
+		console.log(this.refs.name.value);
 	}
 
 	render() {
@@ -31,7 +36,7 @@ class App extends Component {
 				name: "Name 3",
 				price: 333333,
 				image: "https://secure.gravatar.com/avatar/55e6d6691bd939bcd5d735f9aaf47630?d=https://www.gamedev.net/uploads/monthly_2017_08/M.png.dee20e8eb1c60318f45411505f7fb6dc.png",
-				status: false 	
+				status: false
 			}
 		];
 		let elements = products.map((product, index) => {
@@ -54,15 +59,36 @@ class App extends Component {
 				</nav>
 				<div className="container">
 
+
+
 					<div className="row">
+
+						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+							<div className="panel panel-info">
+								<div className="panel-heading">
+									<h3 className="panel-title">Add Product</h3>
+								</div>
+								<div className="panel-body">
+									<div className="form-group">
+										<label>Name Product</label>
+										<input type="text" className="form-control" ref="name" />
+									</div>
+									<button type="submit" className="btn btn-primary" onClick={this.onAddProduct}>
+										Save
+									</button>
+								</div>
+							</div>
+
+						</div>
 
 						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							{elements}
 						</div>
-						
+
 						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							{/* Truyền k tham số */}
-							<button type="button" className="btn btn-default" onClick= {this.onClick}>
+							<button type="button" className="btn btn-default" onClick={this.onClick}>
 								Click
 							</button>
 							{/* Truyền có tham số => phải sử dụng arrow function*/}
@@ -70,7 +96,7 @@ class App extends Component {
 								Click 2
 							</button>
 						</div>
-						
+
 					</div>
 
 
