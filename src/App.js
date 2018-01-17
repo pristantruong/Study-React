@@ -22,32 +22,32 @@ class App extends Component {
 		}
 	}
 
-	onGenerateData = () => {
-		// sử dụng random string 
-		var tasks = [
-			{
-				id: this.generateID(),
-				name: 'NodeJS',
-				status: true
-			},
-			{
-				id: this.generateID(),
-				name: 'React',
-				status: true
-			},
-			{
-				id: this.generateID(),
-				name: 'ReactJS',
-				status: false
-			}
-		];
-		this.setState({
-			tasks: tasks
-		});
-		//Lưu vào localStorage và chuyển sang kiểu string
-		localStorage.setItem('tasks', JSON.stringify(tasks));
+	// onGenerateData = () => {
+	// 	// sử dụng random string 
+	// 	var tasks = [
+	// 		{
+	// 			id: this.generateID(),
+	// 			name: 'NodeJS',
+	// 			status: true
+	// 		},
+	// 		{
+	// 			id: this.generateID(),
+	// 			name: 'React',
+	// 			status: true
+	// 		},
+	// 		{
+	// 			id: this.generateID(),
+	// 			name: 'ReactJS',
+	// 			status: false
+	// 		}
+	// 	];
+	// 	this.setState({
+	// 		tasks: tasks
+	// 	});
+	// 	//Lưu vào localStorage và chuyển sang kiểu string
+	// 	localStorage.setItem('tasks', JSON.stringify(tasks));
 
-	}
+	// }
 
 	// hàm random chuỗi
 	randomstring() {
@@ -109,10 +109,10 @@ class App extends Component {
 							className="btn btn-primary"
 							onClick = {this.onToggleForm}>
 							<span className="fa fa-plus mr-5"></span>Add Task</button>
-						<button type="button"
+						{/* <button type="button"
 							className="btn btn-success ml-5"
 							onClick={this.onGenerateData}>
-							<span className="fa fa-plus mr-5"></span>Add Data</button>
+							<span className="fa fa-plus mr-5"></span>Add Data</button> */}
 						{/* Search and Sort */}
 
 						{/* Search */}

@@ -31,7 +31,17 @@ class TaskForm extends Component {
         //hàm giữ lại biến event không cho load lại trang
         event.preventDefault();
         this.props.onSubmit(this.state);
-        
+        //hủy bỏ và close form
+        this.onClear();
+        this.onCloseForm(); 
+    }
+
+    onClear = () =>{
+        // setState về giá trị ban đầu
+        this.setState({
+            name: '',
+            status: true
+        })
     }
     render() {
         return (
@@ -68,8 +78,10 @@ class TaskForm extends Component {
                             <button type="submit" className="btn btn-success">
                                 <span className="fa fa-plus mr-5"></span>Save
 										</button>&nbsp;
-
-										<button type="button" className="btn btn-danger">
+                            <button 
+                                type="button"   
+                                className="btn btn-danger" 
+                                onClick={this.onClear}>
                                 <span className="fa fa-plus mr-5"></span>Cancel
 										</button>
                         </div>
