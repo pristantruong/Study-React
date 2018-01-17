@@ -83,8 +83,30 @@ class App extends Component {
 		});
 		//Lưu vào localStorage có key đã lưu trước đó
 		localStorage.setItem('tasks', JSON.stringify(tasks))
+	}
+	//nhận từ TaskList -> TaskItem
+	onUpdateStatus = (id) =>{
+		var {tasks} = this.state;
+		var index = this.findIndex(id);
+		console.log(index);
+		if (index !== -1){
+			tasks[index].status = !tasks[index].status; 
+			this.setState({
+				tasks : tasks
+			});
+			localStorage.setItem('tasks', JSON.stringify(tasks))
+		}
 		
-		
+	}
+	//kiểm tra id có trùng với đt nhận đc k
+	findIndex = (id) => {
+		var {tasks} = this.state;
+		var result = -1; 
+		tasks.forEach((task, index) => {
+			if (task.id === id)
+				result = index;
+		});
+		return result;
 	}
 	render() {
 		var { tasks, isDisplayForm } = this.state; // var task = this.state.tasks
@@ -117,8 +139,11 @@ class App extends Component {
 
 						{/* Search */}
 						<SearchSort />
-						
-						<TaskList tasks={tasks} />
+						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
+						<TaskList 
+							tasks={tasks} 
+							onUpdateStatus={this.onUpdateStatus}
+						/>
 						
 					</div>
 
