@@ -11,7 +11,7 @@ class App extends Component {
 			tasks: [] //id: không trùng
 		}
 	}
-	// chỉ gọi 1 lần 
+	// được gọi khi component được gắn vào, sẽ được gọi khi refesh
 	componentWillMount() {
 		if (localStorage && localStorage.getItem('tasks')) {
 			var tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -19,6 +19,8 @@ class App extends Component {
 				tasks: tasks
 			})
 		}
+		console.log('test willmount');
+		
 	}
 
 	onGenerateData = () => {
