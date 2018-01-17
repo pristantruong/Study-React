@@ -9,7 +9,9 @@ class TaskList extends Component {
                         key={task.id} 
                         index={index} 
                         task={task}
-                        onUpdateStatus={this.props.onUpdateStatus}/>
+                        onUpdateStatus={this.props.onUpdateStatus}
+                        //this.props.onDelete là gọi từ thằng App.js (onDelete=....)
+                        onDelete={this.props.onDelete}/>
         });
         return (
             <table className="table table-bordered table-hover mt-15">
