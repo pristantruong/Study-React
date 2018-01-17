@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 class TaskForm extends Component {
     onCloseForm = () =>{
-        // lấy từ <TaskForm onCloseForm =..../>
+        // lấy từ <TaskForm onCloseForm =..../>  
         this.props.onCloseForm();
     }
     render() {
