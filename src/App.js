@@ -70,9 +70,26 @@ class App extends Component {
 			isDisplayForm: false
 		})
 	}
+
+	//nhận lại state từ TaskForm truyền ra (biến data tự đặt)
+	onSubmit = (data) => {
+		//lấy ds các tasks ở trong state phần constructor
+		var {tasks} = this.state;
+		data.id = this.generateID();
+		// lấy giá trị nhận được từ TaskForm gán vào task để hiển thị ở table
+		tasks.push(data);
+		this.setState({
+			tasks: tasks
+		});
+		localStorage.setItem('task', JSON.stringify(tasks))
+		
+		
+	}
 	render() {
 		var { tasks, isDisplayForm } = this.state; // var task = this.state.tasks
-		var elmTaskForm = isDisplayForm ? <TaskForm onCloseForm={this.onCloseForm}/> : '';
+		var elmTaskForm = isDisplayForm 
+			? <TaskForm onSubmit={this.onSubmit} onCloseForm={this.onCloseForm}/> 
+			: '';
 		return (
 			<div className="container">
 				<div className="text-center">

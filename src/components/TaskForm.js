@@ -1,8 +1,37 @@
 import React, { Component } from 'react';
 class TaskForm extends Component {
+    
+    constructor(props){
+        super(props);
+        this.state = {
+            //name phải trùng với input
+            name: '',
+            status: true,
+        }
+    }
+    
     onCloseForm = () =>{
         // lấy từ <TaskForm onCloseForm =..../>
         this.props.onCloseForm();
+    }
+
+    onChange = (event) => {
+        var target = event.target;
+        var name = target.name;
+        var value = target.value;
+        if (name === 'status') {
+            value = target.value === 'true' ? true : false;
+        } 
+        this.setState({
+            [name]: value
+        })
+    }
+
+    onSubmit = (event) =>{
+        //hàm giữ lại biến event không cho load lại trang
+        event.preventDefault();
+        this.props.onSubmit(this.state);
+        
     }
     render() {
         return (
@@ -15,22 +44,28 @@ class TaskForm extends Component {
                     </h3>
                 </div>
                 <div className="panel-body">
-                    <form>
+                    <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <label >Name :</label>
                             <input type="text"
                                 className="form-control"
-                                name="name" />
+                                //name phải trùng với state
+                                name="name" 
+                                value={this.state.name}
+                                onChange={this.onChange}/>
                         </div>
                         <label>Status</label>
-                        <select className="form-control"
-                            name="status">
+                        <select 
+                            className="form-control"
+                            name="status"
+                            value={this.state.status}
+                            onChange={this.onChange}>
                             <option value={true}>Active</option>
                             <option value={false}>Invisible</option>
                         </select><br />
                         <div className="text-center">
-
-                            <button type="button" className="btn btn-success">
+                            {/* button type bằng submit mới hiểu được */}
+                            <button type="submit" className="btn btn-success">
                                 <span className="fa fa-plus mr-5"></span>Save
 										</button>&nbsp;
 
