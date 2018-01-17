@@ -14,7 +14,8 @@ class App extends Component {
 			filter: {
 				name: '',
 				status: -1
-			}
+			},
+			keyword: '',
 		}
 	}
 	// chỉ gọi 1 lần 
@@ -173,9 +174,15 @@ class App extends Component {
 			}
 		})
 	}
+
+	onSearch = (keyword) => {
+		this.setState({
+			keyword: keyword
+		})
+	}
 	render() {
 		//khai báo theo kiểu es6
-		var { tasks, isDisplayForm, taskEditing, filter } = this.state; // var task = this.state.tasks
+		var { tasks, isDisplayForm, taskEditing, filter, keyword } = this.state; // var task = this.state.tasks
 		//Filter
 		if (filter) {
 			//filter name
@@ -191,6 +198,12 @@ class App extends Component {
 				} else {
 					return task.status === (filter.status === 1 ? true : false)
 				}
+			});
+		}
+		//search with keyword
+		if (keyword) {
+			tasks = tasks.filter((task) => {
+				return task.name.toLowerCase().indexOf(keyword) !== -1;
 			});
 		}
 		var elmTaskForm = isDisplayForm
@@ -224,7 +237,7 @@ class App extends Component {
 						{/* Search and Sort */}
 
 						{/* Search */}
-						<SearchSort />
+						<SearchSort onSearch={this.onSearch} />
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
 							tasks={tasks}
