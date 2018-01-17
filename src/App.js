@@ -10,7 +10,11 @@ class App extends Component {
 		this.state = {
 			tasks: [],
 			isDisplayForm: false, //id: không trùng
-			taskEditing: null
+			taskEditing: null,
+			filter: {
+				name: '',
+				status: -1
+			}
 		}
 	}
 	// chỉ gọi 1 lần 
@@ -61,15 +65,15 @@ class App extends Component {
 	}
 
 	// Hiện form và xử lý thêm task
-	onToggleForm = () =>{
-		if (this.state.isDisplayForm && this.state.taskEditing !== null){
+	onToggleForm = () => {
+		if (this.state.isDisplayForm && this.state.taskEditing !== null) {
 			this.setState({
-				isDisplayForm : true,
+				isDisplayForm: true,
 				taskEditing: null
 			})
-		}else{
+		} else {
 			this.setState({
-				isDisplayForm : !this.state.isDisplayForm,
+				isDisplayForm: !this.state.isDisplayForm,
 				taskEditing: null
 			})
 		}
@@ -90,17 +94,17 @@ class App extends Component {
 	//nhận lại state từ TaskForm truyền ra (biến data tự đặt)
 	onSubmit = (data) => {
 		//lấy ds các tasks ở trong state phần constructor
-		var {tasks} = this.state;
+		var { tasks } = this.state;
 		//kiểm tra edit hay add
-		if (data.id === ''){
-			 data.id = this.generateID();
+		if (data.id === '') {
+			data.id = this.generateID();
 			// lấy giá trị nhận được từ TaskForm gán vào task để hiển thị ở table
 			tasks.push(data);
-		}else{
+		} else {
 			var index = this.findIndex(data.id);
-			tasks[index] = data; 
+			tasks[index] = data;
 		}
-		
+
 		this.setState({
 			tasks: tasks,
 			taskEditing: null
@@ -109,23 +113,23 @@ class App extends Component {
 		localStorage.setItem('tasks', JSON.stringify(tasks))
 	}
 	//nhận từ TaskList -> TaskItem
-	onUpdateStatus = (id) =>{
-		var {tasks} = this.state;
+	onUpdateStatus = (id) => {
+		var { tasks } = this.state;
 		var index = this.findIndex(id);
 		console.log(index);
-		if (index !== -1){
-			tasks[index].status = !tasks[index].status; 
+		if (index !== -1) {
+			tasks[index].status = !tasks[index].status;
 			this.setState({
-				tasks : tasks
+				tasks: tasks
 			});
 			localStorage.setItem('tasks', JSON.stringify(tasks))
 		}
-		
+
 	}
 	//kiểm tra id có trùng với đt nhận đc k
 	findIndex = (id) => {
-		var {tasks} = this.state;
-		var result = -1; 
+		var { tasks } = this.state;
+		var result = -1;
 		tasks.forEach((task, index) => {
 			if (task.id === id)
 				result = index;
@@ -134,7 +138,7 @@ class App extends Component {
 	}
 
 	//id do taskitem truyền cho tasklist và tasklist truyền ra app.js
-	onDelete = (id) =>{
+	onDelete = (id) => {
 		var { tasks } = this.state;
 		var index = this.findIndex(id);
 		if (index !== -1) {
@@ -147,10 +151,10 @@ class App extends Component {
 		this.onCloseForm();
 	}
 
-	onUpdate = (id) =>{
+	onUpdate = (id) => {
 		var { tasks } = this.state;
 		var index = this.findIndex(id);
-		var taskEditing = tasks[index]; 
+		var taskEditing = tasks[index];
 		this.setState({
 			//taskEditing đầu là taskEditing được khai báo trong state
 			//taskEditing thứ 2 là taskEditing mới vừa tạo trong onUpdate 
@@ -158,15 +162,44 @@ class App extends Component {
 		})
 		this.onShowForm();
 	}
+
+	onFilter = (filterName, filterStatus) => {
+		//ép sang kiểu int
+		filterStatus = parseInt(filterStatus, 10);
+		this.setState({
+			filter: {
+				name: filterName.toLowerCase(),
+				status: filterStatus,
+			}
+		})
+	}
 	render() {
-		var { tasks, isDisplayForm, taskEditing } = this.state; // var task = this.state.tasks
-		var elmTaskForm = isDisplayForm 
-			? <TaskForm 
-				onSubmit={this.onSubmit} 
+		//khai báo theo kiểu es6
+		var { tasks, isDisplayForm, taskEditing, filter } = this.state; // var task = this.state.tasks
+		//Filter
+		if (filter) {
+			//filter name
+			if (filter.name) {
+				tasks = tasks.filter((task) => {
+					return task.name.toLowerCase().indexOf(filter.name) !== -1;
+				});
+			}
+			//filter status
+			tasks = tasks.filter((task) => {
+				if (filter.status === -1) {
+					return task;
+				} else {
+					return task.status === (filter.status === 1 ? true : false)
+				}
+			});
+		}
+		var elmTaskForm = isDisplayForm
+			? <TaskForm
+				onSubmit={this.onSubmit}
 				onCloseForm={this.onCloseForm}
-				task={taskEditing}/> 
+				task={taskEditing} />
 			: '';
-		return ( 
+		return (
 			<div className="container">
 				<div className="text-center">
 					<h1>Task Manager</h1><hr />
@@ -175,14 +208,14 @@ class App extends Component {
 
 					<div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
 						{/* Form */}
-						{ elmTaskForm }
+						{elmTaskForm}
 					</div>
 					<div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
 
-						<button 
-							type="button" 
+						<button
+							type="button"
 							className="btn btn-primary"
-							onClick = {this.onToggleForm}>
+							onClick={this.onToggleForm}>
 							<span className="fa fa-plus mr-5"></span>Add Task</button>
 						{/* <button type="button"
 							className="btn btn-success ml-5"
@@ -193,13 +226,14 @@ class App extends Component {
 						{/* Search */}
 						<SearchSort />
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
-						<TaskList 
-							tasks={tasks} 
+						<TaskList
+							tasks={tasks}
 							onUpdateStatus={this.onUpdateStatus}
 							onDelete={this.onDelete}
 							onUpdate={this.onUpdate}
+							onFilter={this.onFilter}
 						/>
-						
+
 					</div>
 
 				</div>
