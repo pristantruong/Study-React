@@ -4,12 +4,42 @@ class TaskForm extends Component {
     constructor(props){
         super(props);
         this.state = {
+            id: '',
             //name phải trùng với input
             name: '',
             status: true,
         }
     }
-    
+    //khi form hiển thị life cycle sẽ được gọi
+    componentWillMount(){
+        // nhận từ task trong TaskForm ở App.js
+        if (this.props.task){
+            this.setState({
+                id : this.props.task.id,
+                name : this.props.task.name,
+                status : this.props.task.status
+            });
+            //console.log(this.state);
+        }
+    }
+
+    // vẫn chạy ngay khi form đã hiển thị 
+    componentWillReceiveProps(nextProps){
+        if (nextProps && nextProps.task){
+            this.setState({
+                id: nextProps.task.id,
+                name: nextProps.task.name,
+                status: nextProps.task.status
+            });
+        }else if (!nextProps.task){
+            this.setState({
+                id: '',
+                name: '',
+                status: true,
+            });
+        }
+    }
+
     onCloseForm = () =>{
         // lấy từ <TaskForm onCloseForm =..../>
         this.props.onCloseForm();
@@ -44,10 +74,12 @@ class TaskForm extends Component {
         })
     }
     render() {
+        var { id } = this.state;
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
-                    <h3 className="panel-title">Add Task
+                    <h3 className="panel-title">
+                        {id !== '' ? 'Edit Task' : 'Add Task' }
                                       <span 
                                         className="fa - fa-times-circle text-right"
                                         onClick={this.onCloseForm}></span>
