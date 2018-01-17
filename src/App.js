@@ -81,7 +81,8 @@ class App extends Component {
 		this.setState({
 			tasks: tasks
 		});
-		localStorage.setItem('task', JSON.stringify(tasks))
+		//Lưu vào localStorage có key đã lưu trước đó
+		localStorage.setItem('tasks', JSON.stringify(tasks))
 		
 		
 	}
