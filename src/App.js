@@ -3,6 +3,9 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import SearchSort from './components/TaskSearchSort';
 import TaskList from './components/TaskList';
+//thư viện bên thứ 3
+import _ from 'lodash'; //import tất cả các thư viện
+import { findIndex} from 'lodash'; //chỉ import các thư viện cần thiết
 class App extends Component {
 
 	constructor(props) {
@@ -118,8 +121,11 @@ class App extends Component {
 	//nhận từ TaskList -> TaskItem
 	onUpdateStatus = (id) => {
 		var { tasks } = this.state;
-		var index = this.findIndex(id);
-		console.log(index);
+		// var index = this.findIndex(id);
+		//tasks là mảng, task là phần tử trong mảng
+		var index = findIndex(tasks, (task) =>{
+			return task.id === id;
+		})
 		if (index !== -1) {
 			tasks[index].status = !tasks[index].status;
 			this.setState({
@@ -233,12 +239,17 @@ class App extends Component {
 			});
 		}
 		//search with keyword
-		if (keyword) {
-			tasks = tasks.filter((task) => {
-				return task.name.toLowerCase().indexOf(keyword) !== -1;
-			});
-		}
-		//console.log(sortBy, "test", sortValue);
+		// if (keyword) {
+		// 	tasks = tasks.filter((task) => {
+		// 		return task.name.toLowerCase().indexOf(keyword) !== -1;
+		// 	});
+		// }
+		
+		
+			tasks =  _.filter(tasks, (task) => {
+				return task.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1;
+			})
+		
 
 		
 
