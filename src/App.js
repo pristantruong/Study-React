@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TaskForm from './components/TaskForm';
-import SearchSort from './components/SearchSort';
+import SearchSort from './components/TaskSearchSort';
 import TaskList from './components/TaskList';
 class App extends Component {
 
@@ -16,6 +16,8 @@ class App extends Component {
 				status: -1
 			},
 			keyword: '',
+			sortBy: 'name',
+			sortValue: 1
 		}
 	}
 	// chỉ gọi 1 lần 
@@ -180,9 +182,39 @@ class App extends Component {
 			keyword: keyword
 		})
 	}
+
+	onSort = (sortBy, sortValue) => {
+		var {tasks} = this.state;
+		this.setState({
+			sort: {
+				sortBy: sortBy,
+				sortValue: sortValue
+			}
+		})
+		if (sortBy) {
+			tasks.sort((a, b) => {
+				if (a.name > b.name) return sortValue;
+				else if (a.name < b.name) return -sortValue;
+				else return 0;
+			})
+		} else {
+			tasks.sort((a, b) => {
+				if (a.status > b.status) return -sortValue;
+				else if (a.status < b.status) return sortValue;
+				else return 0;
+			})
+		}
+		
+	}
 	render() {
 		//khai báo theo kiểu es6
-		var { tasks, isDisplayForm, taskEditing, filter, keyword } = this.state; // var task = this.state.tasks
+		var {
+			tasks,
+			isDisplayForm,
+			taskEditing,
+			filter,
+			keyword,
+			 } = this.state; // var task = this.state.tasks
 		//Filter
 		if (filter) {
 			//filter name
@@ -206,6 +238,10 @@ class App extends Component {
 				return task.name.toLowerCase().indexOf(keyword) !== -1;
 			});
 		}
+		//console.log(sortBy, "test", sortValue);
+
+		
+
 		var elmTaskForm = isDisplayForm
 			? <TaskForm
 				onSubmit={this.onSubmit}
@@ -237,7 +273,11 @@ class App extends Component {
 						{/* Search and Sort */}
 
 						{/* Search */}
-						<SearchSort onSearch={this.onSearch} />
+						<SearchSort
+							onSearch={this.onSearch}
+							onSort={this.onSort}
+							sortBy={this.state.sortBy}
+							sortValue={this.state.sortValue} />
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
 							tasks={tasks}
@@ -246,12 +286,9 @@ class App extends Component {
 							onUpdate={this.onUpdate}
 							onFilter={this.onFilter}
 						/>
-
 					</div>
-
 				</div>
 			</div>
-
 		);
 	}
 }
