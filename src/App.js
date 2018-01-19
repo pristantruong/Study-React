@@ -6,6 +6,7 @@ import TaskList from './components/TaskList';
 //thư viện bên thứ 3
 import _ from 'lodash'; //import tất cả các thư viện
 import { findIndex} from 'lodash'; //chỉ import các thư viện cần thiết
+import demo from './tranning/demo'
 class App extends Component {
 
 	constructor(props) {
