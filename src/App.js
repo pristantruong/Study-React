@@ -280,7 +280,6 @@ class App extends Component {
 							sortValue={this.state.sortValue} />
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
-							tasks={tasks}
 							onUpdateStatus={this.onUpdateStatus}
 							onDelete={this.onDelete}
 							onUpdate={this.onUpdate}
