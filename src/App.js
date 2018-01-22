@@ -8,7 +8,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks: [],
+			// tasks: [], k cần sử dụng do đã dùng redux
 			isDisplayForm: false, //id: không trùng
 			taskEditing: null,
 			filter: {
@@ -20,15 +20,15 @@ class App extends Component {
 			sortValue: 1
 		}
 	}
-	// chỉ gọi 1 lần 
-	componentWillMount() {
-		if (localStorage && localStorage.getItem('tasks')) {
-			var tasks = JSON.parse(localStorage.getItem('tasks'));
-			this.setState({
-				tasks: tasks
-			})
-		}
-	}
+	// chỉ gọi 1 lần, không cần sử dụng do đã gọi redux 
+	// componentWillMount() {
+	// 	if (localStorage && localStorage.getItem('tasks')) {
+	// 		var tasks = JSON.parse(localStorage.getItem('tasks'));
+	// 		this.setState({
+	// 			tasks: tasks
+	// 		})
+	// 	}
+	// }
 
 	// onGenerateData = () => {
 	// 	// sử dụng random string 
@@ -57,15 +57,15 @@ class App extends Component {
 
 	// }
 
-	// hàm random chuỗi
-	randomstring() {
-		return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-	}
+	// // hàm random chuỗi -- do sử dụng redux
+	// randomstring() {
+	// 	return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+	// }
 
-	generateID() {
-		// Tạo càng nhiều càng khó trùng
-		return this.randomstring() + this.randomstring() + '-' + this.randomstring() + '-' + this.randomstring();
-	}
+	// generateID() {
+	// 	// Tạo càng nhiều càng khó trùng
+	// 	return this.randomstring() + this.randomstring() + '-' + this.randomstring() + '-' + this.randomstring();
+	// }
 
 	// Hiện form và xử lý thêm task
 	onToggleForm = () => {
@@ -95,26 +95,26 @@ class App extends Component {
 	}
 
 	//nhận lại state từ TaskForm truyền ra (biến data tự đặt)
-	onSubmit = (data) => {
-		//lấy ds các tasks ở trong state phần constructor
-		var { tasks } = this.state;
-		//kiểm tra edit hay add
-		if (data.id === '') {
-			data.id = this.generateID();
-			// lấy giá trị nhận được từ TaskForm gán vào task để hiển thị ở table
-			tasks.push(data);
-		} else {
-			var index = this.findIndex(data.id);
-			tasks[index] = data;
-		}
+	// onSubmit = (data) => {
+	// 	//lấy ds các tasks ở trong state phần constructor
+	// 	var { tasks } = this.state;
+	// 	//kiểm tra edit hay add
+	// 	if (data.id === '') {
+	// 		data.id = this.generateID();
+	// 		// lấy giá trị nhận được từ TaskForm gán vào task để hiển thị ở table
+	// 		tasks.push(data);
+	// 	} else {
+	// 		var index = this.findIndex(data.id);
+	// 		tasks[index] = data;
+	// 	}
 
-		this.setState({
-			tasks: tasks,
-			taskEditing: null
-		});
-		//Lưu vào localStorage có key đã lưu trước đó
-		localStorage.setItem('tasks', JSON.stringify(tasks))
-	}
+	// 	this.setState({
+	// 		tasks: tasks,
+	// 		taskEditing: null
+	// 	});
+	// 	//Lưu vào localStorage có key đã lưu trước đó
+	// 	localStorage.setItem('tasks', JSON.stringify(tasks))
+	// }
 	//nhận từ TaskList -> TaskItem
 	onUpdateStatus = (id) => {
 		var { tasks } = this.state;
@@ -209,36 +209,36 @@ class App extends Component {
 	render() {
 		//khai báo theo kiểu es6
 		var {
-			tasks,
+			// tasks, (do đã dùng redux)
 			isDisplayForm,
 			taskEditing,
-			filter,
-			keyword,
+			// filter, (do đã dùng redux)
+			// keyword, (do đã dùng redux)
 			 } = this.state; // var task = this.state.tasks
-		//Filter
-		if (filter) {
-			//filter name
-			if (filter.name) {
-				tasks = tasks.filter((task) => {
-					return task.name.toLowerCase().indexOf(filter.name) !== -1;
-				});
-			}
-			//filter status
-			tasks = tasks.filter((task) => {
-				if (filter.status === -1) {
-					return task;
-				} else {
-					return task.status === (filter.status === 1 ? true : false)
-				}
-			});
-		}
-		//search with keyword
-		if (keyword) {
-			tasks = tasks.filter((task) => {
-				return task.name.toLowerCase().indexOf(keyword) !== -1;
-			});
-		}
-		//console.log(sortBy, "test", sortValue);
+		//Filter (do đã dùng redux)
+		// if (filter) {
+		// 	//filter name
+		// 	if (filter.name) {
+		// 		tasks = tasks.filter((task) => {
+		// 			return task.name.toLowerCase().indexOf(filter.name) !== -1;
+		// 		});
+		// 	}
+		// 	//filter status
+		// 	tasks = tasks.filter((task) => {
+		// 		if (filter.status === -1) {
+		// 			return task;
+		// 		} else {
+		// 			return task.status === (filter.status === 1 ? true : false)
+		// 		}
+		// 	});
+		// }
+		//search with keyword (do đã dùng redux)
+		// if (keyword) {
+		// 	tasks = tasks.filter((task) => {
+		// 		return task.name.toLowerCase().indexOf(keyword) !== -1;
+		// 	});
+		// }
+		// //console.log(sortBy, "test", sortValue);
 
 		
 
