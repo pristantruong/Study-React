@@ -9,7 +9,8 @@ class TaskItem extends Component {
     }
 
     onDelete = () => {
-        this.props.onDelete(this.props.task.id)
+        // this.props.onDelete(this.props.task.id) do sử dụng redux
+        this.props.onDeleteTask(this.props.task.id); // dispatch(actions.deleteTask)
     }        
 
     onUpdate = () => {
@@ -57,9 +58,16 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => { //dispatch giúp thực thi 1 hành độg và props
     return {
         onUpdateStatus: (id) => {
-            dispatch(actions.updateStatus(id))
+            dispatch(actions.updateStatus(id)); 
         },
 
+        onDeleteTask: (id) => {  //onDeleteTask là tự đặt
+            dispatch(actions.deleteTask(id));
+        },
+
+        onCloseForm: () => {
+            dispatch(actions.closeForm())
+        }
     };
 };
 

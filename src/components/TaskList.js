@@ -34,7 +34,7 @@ class TaskList extends Component {
                         task={task}
                         // onUpdateStatus={this.props.onUpdateStatus} do sử dụng redux
                         //this.props.onDelete là gọi từ thằng App.js (onDelete=....)
-                        onDelete={this.props.onDelete}
+                        // onDelete={this.props.onDelete} do sử dụng redux
                         onUpdate={this.props.onUpdate}/>
         });
         return (

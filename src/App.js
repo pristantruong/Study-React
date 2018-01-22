@@ -145,18 +145,18 @@ class App extends Component {
 	// }
 
 	//id do taskitem truyền cho tasklist và tasklist truyền ra app.js
-	onDelete = (id) => {
-		var { tasks } = this.state;
-		var index = this.findIndex(id);
-		if (index !== -1) {
-			tasks.splice(index, 1);
-			this.setState({
-				tasks: tasks
-			});
-			localStorage.setItem('tasks', JSON.stringify(tasks))
-		}
-		this.onCloseForm();
-	}
+	// onDelete = (id) => { //do sử dụng redux
+	// 	var { tasks } = this.state;
+	// 	var index = this.findIndex(id);
+	// 	if (index !== -1) {
+	// 		tasks.splice(index, 1);
+	// 		this.setState({
+	// 			tasks: tasks
+	// 		});
+	// 		localStorage.setItem('tasks', JSON.stringify(tasks))
+	// 	}
+	// 	this.onCloseForm();
+	// }
 
 	onUpdate = (id) => {
 		var { tasks } = this.state;
@@ -285,7 +285,7 @@ class App extends Component {
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
 							// onUpdateStatus={this.onUpdateStatus} do sử dụng redux
-							onDelete={this.onDelete}
+							// onDelete={this.onDelete} do sử dụng redux
 							onUpdate={this.onUpdate}
 							onFilter={this.onFilter}
 						/>

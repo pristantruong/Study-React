@@ -22,6 +22,8 @@ var findIndex = (tasks, id) => {
 var data = JSON.parse(localStorage.getItem('tasks'))
 var initialState = data ? data : [];
 var myReducer = (state = initialState, action) => {
+    var id = '';
+    var index = -1;
     switch (action.type) {
         case types.LIST_ALL:
             return state;
@@ -35,8 +37,8 @@ var myReducer = (state = initialState, action) => {
             localStorage.setItem('tasks', JSON.stringify(state)); 
             return [...state];
         case types.UPDATE_STATUS_TASK:
-            var id = action.id;
-            var index = findIndex(state, id); //khi nào bên trong class mới có this.
+            id = action.id;
+            index = findIndex(state, id); //khi nào bên trong class mới có this.
             // state[index].status = !state[index].status;
             //====C1=======:
             // var cloneTask = {...state[index]}; //tạo ra 1 object mới
@@ -44,11 +46,17 @@ var myReducer = (state = initialState, action) => {
             // state[index] = cloneTask;
             //====C2========:
             state[index] = {
-                ...state[index],
+                ...state[index], //copy ra một state[index mới]
                 status : !state[index].status
             };
-            localStorage.setItem('tasks', JSON.stringify(state)) 
+            localStorage.setItem('tasks', JSON.stringify(state));
             return [...state]; // return về state mới
+        case types.DELETE_TASK:
+            id = action.id
+            index = findIndex(state, id);
+            state.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(state));
+            return [...state];
         default:
             return state;
     }
