@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
 class TaskItem extends Component {
 
     onUpdateStatus = () =>{
-        this.props.onUpdateStatus(this.props.task.id)
+        // this.props.onUpdateStatus(this.props.task.id) do sử dụng redux
+        this.props.onUpdateStatus(this.props.task.id);
     }
 
     onDelete = () => {
@@ -45,4 +48,19 @@ class TaskItem extends Component {
     }
 }
 
-export default TaskItem;
+// tạo kết nối để lấy state từ store về biến state đc khai báo lấy từ store
+const mapStateToProps = state => {
+    return {
+    };
+};
+
+const mapDispatchToProps = (dispatch, props) => { //dispatch giúp thực thi 1 hành độg và props
+    return {
+        onUpdateStatus: (id) => {
+            dispatch(actions.updateStatus(id))
+        },
+
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskItem);

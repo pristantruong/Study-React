@@ -119,30 +119,30 @@ class App extends Component {
 	// 	//Lưu vào localStorage có key đã lưu trước đó
 	// 	localStorage.setItem('tasks', JSON.stringify(tasks))
 	// }
-	//nhận từ TaskList -> TaskItem
-	onUpdateStatus = (id) => {
-		var { tasks } = this.state;
-		var index = this.findIndex(id);
-		console.log(index);
-		if (index !== -1) {
-			tasks[index].status = !tasks[index].status;
-			this.setState({
-				tasks: tasks
-			});
-			localStorage.setItem('tasks', JSON.stringify(tasks))
-		}
 
-	}
+	//nhận từ TaskList -> TaskItem
+	// onUpdateStatus = (id) => {
+	// 	var { tasks } = this.state;
+	// 	var index = this.findIndex(id);
+	// 	if (index !== -1) {
+	// 		tasks[index].status = !tasks[index].status;
+	// 		this.setState({
+	// 			tasks: tasks
+	// 		});
+	// 		localStorage.setItem('tasks', JSON.stringify(tasks))
+	// 	}
+	// }
+
 	//kiểm tra id có trùng với đt nhận đc k
-	findIndex = (id) => {
-		var { tasks } = this.state;
-		var result = -1;
-		tasks.forEach((task, index) => {
-			if (task.id === id)
-				result = index;
-		});
-		return result;
-	}
+	// findIndex = (id) => { //do sử dụng redux
+	// 	var { tasks } = this.state;
+	// 	var result = -1;
+	// 	tasks.forEach((task, index) => {
+	// 		if (task.id === id)
+	// 			result = index;
+	// 	});
+	// 	return result;
+	// }
 
 	//id do taskitem truyền cho tasklist và tasklist truyền ra app.js
 	onDelete = (id) => {
@@ -284,7 +284,7 @@ class App extends Component {
 							sortValue={this.state.sortValue} />
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
-							onUpdateStatus={this.onUpdateStatus}
+							// onUpdateStatus={this.onUpdateStatus} do sử dụng redux
 							onDelete={this.onDelete}
 							onUpdate={this.onUpdate}
 							onFilter={this.onFilter}

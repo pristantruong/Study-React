@@ -10,6 +10,15 @@ var generateID = () => {
     return ramdomString() + ramdomString() + '-' + ramdomString() + '-' + ramdomString();
 }
 
+var findIndex = (tasks, id) => {
+    var result = -1;
+    tasks.forEach((task, index) => {
+        if (task.id === id)
+            result = index;
+    });
+    return result;
+}
+
 var data = JSON.parse(localStorage.getItem('tasks'))
 var initialState = data ? data : [];
 var myReducer = (state = initialState, action) => {
@@ -25,7 +34,21 @@ var myReducer = (state = initialState, action) => {
             state.push(newTask);
             localStorage.setItem('tasks', JSON.stringify(state)); 
             return [...state];
-        case types.TOGGLE_FORM:
+        case types.UPDATE_STATUS_TASK:
+            var id = action.id;
+            var index = findIndex(state, id); //khi nào bên trong class mới có this.
+            // state[index].status = !state[index].status;
+            //====C1=======:
+            // var cloneTask = {...state[index]}; //tạo ra 1 object mới
+            // cloneTask.status = !cloneTask.status;
+            // state[index] = cloneTask;
+            //====C2========:
+            state[index] = {
+                ...state[index],
+                status : !state[index].status
+            };
+            localStorage.setItem('tasks', JSON.stringify(state)) 
+            return [...state]; // return về state mới
         default:
             return state;
     }
