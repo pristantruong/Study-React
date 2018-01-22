@@ -183,26 +183,31 @@ class App extends Component {
 		})
 	}
 
-	onSort = (sortBy, sortValue) => {
+	onSort = (sortBy, sortValue) => {	
 		var {tasks} = this.state;
+		// console.log(tasks);
+		// console.log('sortby',sortBy);
+		// console.log('sortValue', sortValue);
 		this.setState({
 			sort: {
 				sortBy: sortBy,
 				sortValue: sortValue
 			}
 		})
+		// console.log('sortby2', sortBy);
+		// console.log('sortValue2', sortValue);
 		if (sortBy) {
 			tasks.sort((a, b) => {
 				if (a.name > b.name) return sortValue;
 				else if (a.name < b.name) return -sortValue;
 				else return 0;
 			})
-		} else {
-			tasks.sort((a, b) => {
-				if (a.status > b.status) return -sortValue;
-				else if (a.status < b.status) return sortValue;
-				else return 0;
-			})
+		// } else {
+		// 	tasks.sort((a, b) => {
+		// 		if (a.status > b.status) return -sortValue;
+		// 		else if (a.status < b.status) return sortValue;
+		// 		else return 0;
+		// 	})
 		}
 		
 	}
