@@ -44,7 +44,8 @@ class TaskForm extends Component {
 
     onCloseForm = () =>{
         // lấy từ <TaskForm onCloseForm =..../>
-        this.props.onCloseForm();
+        // this.props.onCloseForm();
+        this.props.onCloseForm(); //lấy từ store
     }
 
     onChange = (event) => {
@@ -140,6 +141,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddTask: (task) => {
             dispatch(actions.addTask(task));
+        },
+        onCloseForm: () => {
+            dispatch(actions.closeForm())
         }
     }
 }

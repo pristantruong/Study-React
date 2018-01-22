@@ -3,13 +3,16 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import SearchSort from './components/TaskSearchSort';
 import TaskList from './components/TaskList';
+import {connect} from 'react-redux';
+import * as actions from './actions/index';
+
 class App extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			// tasks: [], k cần sử dụng do đã dùng redux
-			isDisplayForm: false, //id: không trùng
+			// isDisplayForm: false, //id: không trùng (do dùng redux)
 			taskEditing: null,
 			filter: {
 				name: '',
@@ -69,17 +72,18 @@ class App extends Component {
 
 	// Hiện form và xử lý thêm task
 	onToggleForm = () => {
-		if (this.state.isDisplayForm && this.state.taskEditing !== null) {
-			this.setState({
-				isDisplayForm: true,
-				taskEditing: null
-			})
-		} else {
-			this.setState({
-				isDisplayForm: !this.state.isDisplayForm,
-				taskEditing: null
-			})
-		}
+		// if (this.state.isDisplayForm && this.state.taskEditing !== null) {
+		// 	this.setState({
+		// 		isDisplayForm: true,
+		// 		taskEditing: null
+		// 	})
+		// } else {
+		// 	this.setState({
+		// 		isDisplayForm: !this.state.isDisplayForm,
+		// 		taskEditing: null
+		// 	})
+		// }
+		this.props.onToggleForm()
 	}
 
 	onShowForm = () => {
@@ -88,11 +92,11 @@ class App extends Component {
 		})
 	}
 
-	onCloseForm = () => {
-		this.setState({
-			isDisplayForm: false
-		})
-	}
+	// onCloseForm = () => { //do sủ dụng redux
+	// 	this.setState({
+	// 		isDisplayForm: false
+	// 	})
+	// }
 
 	//nhận lại state từ TaskForm truyền ra (biến data tự đặt)
 	// onSubmit = (data) => {
@@ -210,7 +214,7 @@ class App extends Component {
 		//khai báo theo kiểu es6
 		var {
 			// tasks, (do đã dùng redux)
-			isDisplayForm,
+			// isDisplayForm, (do đã dùng redux)
 			taskEditing,
 			// filter, (do đã dùng redux)
 			// keyword, (do đã dùng redux)
@@ -240,12 +244,12 @@ class App extends Component {
 		// }
 		// //console.log(sortBy, "test", sortValue);
 
-		
+		var { isDisplayForm } = this.props; //do state đã chuyển thành props lấy đc từ mapStateToProps
 
 		var elmTaskForm = isDisplayForm
 			? <TaskForm
-				onSubmit={this.onSubmit}
-				onCloseForm={this.onCloseForm}
+				// onSubmit={this.onSubmit} do sử dụng redux
+				// onCloseForm={this.onCloseForm} do sử dụng redux
 				task={taskEditing} />
 			: '';
 		return (
@@ -291,5 +295,20 @@ class App extends Component {
 		);
 	}
 }
+// tạo kết nối để lấy state từ store về biến state đc khai báo lấy từ store
+const mapStateToProps = state => {
+	return {
+		isDisplayForm: state.isDisplayForm
+	};
+};
 
-export default App;
+const mapDispatchToProps = (dispatch, props) => { //dispatch giúp thực thi 1 hành độg và props
+	return {
+		onToggleForm: () => {
+			dispatch(actions.toggleForm())
+		},
+	
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
