@@ -79,6 +79,7 @@ class TaskForm extends Component {
     }
     render() {
         var { id } = this.state;
+        if (!this.props.isDisplayForm) return ''; 
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
@@ -133,7 +134,7 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        isDisplayForm: state.isDisplayForm // lấy từ isDisplay form trong reducers
     }
 };
 
@@ -144,7 +145,7 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onCloseForm: () => {
             dispatch(actions.closeForm())
-        }
+        },
     }
 }
 

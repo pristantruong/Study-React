@@ -246,12 +246,12 @@ class App extends Component {
 
 		var { isDisplayForm } = this.props; //do state đã chuyển thành props lấy đc từ mapStateToProps
 
-		var elmTaskForm = isDisplayForm
-			? <TaskForm
-				// onSubmit={this.onSubmit} do sử dụng redux
-				// onCloseForm={this.onCloseForm} do sử dụng redux
-				task={taskEditing} />
-			: '';
+		// var elmTaskForm = isDisplayForm // do sử dụng redux
+		// 	? <TaskForm
+		// 		// onSubmit={this.onSubmit} do sử dụng redux
+		// 		// onCloseForm={this.onCloseForm} do sử dụng redux
+		// 		task={taskEditing} />
+		// 	: '';
 		return (
 			<div className="container">
 				<div className="text-center">
@@ -261,7 +261,10 @@ class App extends Component {
 
 					<div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
 						{/* Form */}
-						{elmTaskForm}
+						<TaskForm
+							// onSubmit={this.onSubmit} do sử dụng redux
+							// onCloseForm={this.onCloseForm} do sử dụng redux
+							task={taskEditing} />
 					</div>
 					<div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
 
