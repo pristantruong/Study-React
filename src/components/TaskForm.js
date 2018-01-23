@@ -13,32 +13,63 @@ class TaskForm extends Component {
         }
     }
     //khi form hiển thị life cycle sẽ được gọi
-    componentWillMount(){
-        // nhận từ task trong TaskForm ở App.js
-        if (this.props.task){
+    // componentWillMount(){
+    //     // nhận từ task trong TaskForm ở App.js
+    //     if (this.props.task){
+    //         this.setState({
+    //             id : this.props.task.id,
+    //             name : this.props.task.name,
+    //             status : this.props.task.status
+    //         });
+    //         //console.log(this.state);
+    //     }
+    // }
+
+    
+    componentWillMount() {
+        if (this.props.itemEditing && this.props.itemEditing.id != null){
+            console.log(this.props.itemEditing);
+            
             this.setState({
-                id : this.props.task.id,
-                name : this.props.task.name,
-                status : this.props.task.status
+                id: this.props.itemEditing.id,
+                name: this.props.itemEditing.name,
+                status: this.props.itemEditing.status
             });
-            //console.log(this.state);
+        }else{
+            this.onClear();
         }
     }
+    
 
     // vẫn chạy ngay khi form đã hiển thị 
-    componentWillReceiveProps(nextProps){
-        if (nextProps && nextProps.task){
+    // componentWillReceiveProps(nextProps){
+    //     console.log(nextProps);
+    //     ;
+        
+    //     if (nextProps && nextProps.task){
+    //         this.setState({
+    //             id: nextProps.task.id,
+    //             name: nextProps.task.name,
+    //             status: nextProps.task.status
+    //         });
+    //     }else if (!nextProps.task){
+    //         this.setState({
+    //             id: '',
+    //             name: '',
+    //             status: true,
+    //         });
+    //     }
+    // }
+
+    componentWillReceiveProps(nextProps) { 
+        if (nextProps && nextProps.itemEditing) {
             this.setState({
-                id: nextProps.task.id,
-                name: nextProps.task.name,
-                status: nextProps.task.status
+                id: nextProps.itemEditing.id,
+                name: nextProps.itemEditing.name,
+                status: nextProps.itemEditing.status
             });
-        }else if (!nextProps.task){
-            this.setState({
-                id: '',
-                name: '',
-                status: true,
-            });
+        } else {
+            this.onClear();
         }
     }
 
@@ -60,14 +91,24 @@ class TaskForm extends Component {
         })
     }
 
-    onSubmit = (event) =>{
+    // onSubmit = (event) =>{
+    //     //hàm giữ lại biến event không cho load lại trang
+    //     event.preventDefault();
+    //     // this.props.onSubmit(this.state); do sử dụng redux
+    //     this.props.onAddTask(this.state);
+    //     //hủy bỏ và close form
+    //     this.onClear();
+    //     this.onCloseForm(); 
+    // }
+
+    onSubmit = (event) => {
         //hàm giữ lại biến event không cho load lại trang
         event.preventDefault();
         // this.props.onSubmit(this.state); do sử dụng redux
-        this.props.onAddTask(this.state);
+        this.props.onSaveTask(this.state);
         //hủy bỏ và close form
         this.onClear();
-        this.onCloseForm(); 
+        this.onCloseForm();
     }
 
     onClear = () =>{
@@ -79,7 +120,7 @@ class TaskForm extends Component {
     }
     render() {
         var { id } = this.state;
-        if (!this.props.isDisplayForm) return ''; 
+        if (!this.props.isDisplayForm) return null; 
         return (
             <div className="panel panel-primary">
                 <div className="panel-heading">
@@ -134,14 +175,15 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        isDisplayForm: state.isDisplayForm // lấy từ isDisplay form trong reducers
+        isDisplayForm: state.isDisplayForm, // lấy từ isDisplay form trong reducers
+        itemEditing : state.itemEditing
     }
 };
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: (task) => {
-            dispatch(actions.addTask(task));
+        onSaveTask: (task) => {
+            dispatch(actions.saveTask(task));
         },
         onCloseForm: () => {
             dispatch(actions.closeForm())

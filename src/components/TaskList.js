@@ -35,7 +35,8 @@ class TaskList extends Component {
                         // onUpdateStatus={this.props.onUpdateStatus} do sử dụng redux
                         //this.props.onDelete là gọi từ thằng App.js (onDelete=....)
                         // onDelete={this.props.onDelete} do sử dụng redux
-                        onUpdate={this.props.onUpdate}/>
+                        // onUpdate={this.props.onUpdate} do sử dụng redux
+                    />
         });
         return (
             <table className="table table-bordered table-hover mt-15">

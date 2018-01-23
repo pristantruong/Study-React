@@ -27,14 +27,20 @@ var myReducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LIST_ALL:
             return state;
-        case types.ADD_TASK:
-            var newTask = {
-                id : generateID(),
+        case types.SAVE_TASK:
+            var task = {
+                id: action.task.id, //có thể rỗng hoặc có gt
                 name: action.task.name,
-                status: action.task.status 
+                status: action.task.status
+            };
+            if (!task.id) {
+                 task.id = generateID();
+                 state.push(task)
+            }else {
+                index = findIndex(state, task.id);
+                state[index] = task;  //state có phần tử index 
             }
-            state.push(newTask);
-            localStorage.setItem('tasks', JSON.stringify(state)); 
+            localStorage.setItem('tasks', JSON.stringify(state));
             return [...state];
         case types.UPDATE_STATUS_TASK:
             id = action.id;
@@ -47,7 +53,7 @@ var myReducer = (state = initialState, action) => {
             //====C2========:
             state[index] = {
                 ...state[index], //copy ra một state[index mới]
-                status : !state[index].status
+                status: !state[index].status
             };
             localStorage.setItem('tasks', JSON.stringify(state));
             return [...state]; // return về state mới

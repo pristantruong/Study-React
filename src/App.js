@@ -3,7 +3,7 @@ import './App.css';
 import TaskForm from './components/TaskForm';
 import SearchSort from './components/TaskSearchSort';
 import TaskList from './components/TaskList';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import * as actions from './actions/index';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
 		this.state = {
 			// tasks: [], k cần sử dụng do đã dùng redux
 			// isDisplayForm: false, //id: không trùng (do dùng redux)
-			taskEditing: null,
+			// taskEditing: null, do sử dụng redux
 			filter: {
 				name: '',
 				status: -1
@@ -83,7 +83,17 @@ class App extends Component {
 		// 		taskEditing: null
 		// 	})
 		// }
-		this.props.onToggleForm()
+		var { itemEditing } = this.props;
+		if (itemEditing && itemEditing.id !==  '') {
+			this.props.onOpenForm(); //gọi từ mapDispatchToProps 
+		} else {
+			this.props.onToggleForm();
+		}
+		this.props.onClearTask({
+			id: '',
+			name: '',
+			status: true
+		});
 	}
 
 	onShowForm = () => {
@@ -158,17 +168,17 @@ class App extends Component {
 	// 	this.onCloseForm();
 	// }
 
-	onUpdate = (id) => {
-		var { tasks } = this.state;
-		var index = this.findIndex(id);
-		var taskEditing = tasks[index];
-		this.setState({
-			//taskEditing đầu là taskEditing được khai báo trong state
-			//taskEditing thứ 2 là taskEditing mới vừa tạo trong onUpdate 
-			taskEditing: taskEditing,
-		})
-		this.onShowForm();
-	}
+	// onUpdate = (id) => {
+	// 	var { tasks } = this.state;
+	// 	var index = this.findIndex(id);
+	// 	var taskEditing = tasks[index];
+	// 	this.setState({
+	// 		//taskEditing đầu là taskEditing được khai báo trong state
+	// 		//taskEditing thứ 2 là taskEditing mới vừa tạo trong onUpdate 
+	// 		taskEditing: taskEditing,
+	// 	})
+	// 	this.onShowForm();
+	// }
 
 	onFilter = (filterName, filterStatus) => {
 		//ép sang kiểu int
@@ -188,7 +198,7 @@ class App extends Component {
 	}
 
 	onSort = (sortBy, sortValue) => {
-		var {tasks} = this.state;
+		var { tasks } = this.state;
 		this.setState({
 			sort: {
 				sortBy: sortBy,
@@ -208,17 +218,17 @@ class App extends Component {
 				else return 0;
 			})
 		}
-		
+
 	}
 	render() {
 		//khai báo theo kiểu es6
-		var {
-			// tasks, (do đã dùng redux)
-			// isDisplayForm, (do đã dùng redux)
-			taskEditing,
-			// filter, (do đã dùng redux)
-			// keyword, (do đã dùng redux)
-			 } = this.state; // var task = this.state.tasks
+		// var {
+		// tasks, (do đã dùng redux)
+		// isDisplayForm, (do đã dùng redux)
+		// taskEditing, do đã sử dụng redux
+		// filter, (do đã dùng redux)
+		// keyword, (do đã dùng redux)
+		//  } = this.state; // var task = this.state.tasks
 		//Filter (do đã dùng redux)
 		// if (filter) {
 		// 	//filter name
@@ -262,9 +272,10 @@ class App extends Component {
 					<div className={isDisplayForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""}>
 						{/* Form */}
 						<TaskForm
-							// onSubmit={this.onSubmit} do sử dụng redux
-							// onCloseForm={this.onCloseForm} do sử dụng redux
-							task={taskEditing} />
+						// onSubmit={this.onSubmit} do sử dụng redux
+						// onCloseForm={this.onCloseForm} do sử dụng redux
+						// task={taskEditing} do sử dụng redux
+						/>
 					</div>
 					<div className={isDisplayForm ? "col-xs-8 col-sm-8 col-md-8 col-lg-8" : "col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
 
@@ -289,7 +300,7 @@ class App extends Component {
 						<TaskList
 							// onUpdateStatus={this.onUpdateStatus} do sử dụng redux
 							// onDelete={this.onDelete} do sử dụng redux
-							onUpdate={this.onUpdate}
+							// onUpdate={this.onUpdate} do sử dụng redux
 							onFilter={this.onFilter}
 						/>
 					</div>
@@ -301,7 +312,8 @@ class App extends Component {
 // tạo kết nối để lấy state từ store về biến state đc khai báo lấy từ store
 const mapStateToProps = state => {
 	return {
-		isDisplayForm: state.isDisplayForm
+		isDisplayForm: state.isDisplayForm,
+		itemEditing: state.itemEditing
 	};
 };
 
@@ -310,7 +322,13 @@ const mapDispatchToProps = (dispatch, props) => { //dispatch giúp thực thi 1 
 		onToggleForm: () => {
 			dispatch(actions.toggleForm())
 		},
-	
+		onClearTask: (task) => {
+			dispatch(actions.editTask(task))
+		},
+		onOpenForm: () => {
+			dispatch(actions.openForm())
+		},
+
 	};
 };
 
