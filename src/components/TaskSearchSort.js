@@ -5,12 +5,14 @@ class SearchSort extends Component {
     render() {
         return (
             <div className="row mt-15">
-                <TaskSearch onSearch={this.props.onSearch}/>
+                <TaskSearch
+                    // onSearch={this.props.onSearch} do sử dụng redux
+                />
                 {/* Sort */}
-                <TaskSort 
+                <TaskSort
                     onSort={this.props.onSort}
                     sortBy={this.props.sortBy}
-                    sortValue={this.props.sortValue}/>
+                    sortValue={this.props.sortValue} />
             </div>
         );
     }

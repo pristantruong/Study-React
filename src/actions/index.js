@@ -58,3 +58,10 @@ export const filterTask = (filter) => {
         filter // gồm filterName và filterStatus 
     }
 }
+
+export const searchTask = (keyword) => {
+    return {
+        type: types.SEARCH,
+        keyword // keyword là kiểu string khai báo bên search(reducers)
+    }
+}
