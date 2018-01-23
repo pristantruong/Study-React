@@ -185,9 +185,9 @@ class App extends Component {
 
 	onSort = (sortBy, sortValue) => {	
 		var {tasks} = this.state;
-		// console.log(tasks);
-		// console.log('sortby',sortBy);
-		// console.log('sortValue', sortValue);
+		console.log(tasks);
+		console.log('sortby',sortBy);
+		console.log('sortValue', sortValue);
 		this.setState({
 			sort: {
 				sortBy: sortBy,
