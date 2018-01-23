@@ -14,10 +14,10 @@ class App extends Component {
 			// tasks: [], k cần sử dụng do đã dùng redux
 			// isDisplayForm: false, //id: không trùng (do dùng redux)
 			// taskEditing: null, do sử dụng redux
-			filter: {
-				name: '',
-				status: -1
-			},
+			// filter: { 
+			// 	name: '',
+			// 	status: -1
+			// },
 			keyword: '',
 			sortBy: 'name',
 			sortValue: 1
@@ -180,16 +180,16 @@ class App extends Component {
 	// 	this.onShowForm();
 	// }
 
-	onFilter = (filterName, filterStatus) => {
-		//ép sang kiểu int
-		filterStatus = parseInt(filterStatus, 10);
-		this.setState({
-			filter: {
-				name: filterName.toLowerCase(),
-				status: filterStatus,
-			}
-		})
-	}
+	// onFilter = (filterName, filterStatus) => { //do sử dụng redux
+	// 	//ép sang kiểu int
+	// 	filterStatus = parseInt(filterStatus, 10);
+	// 	this.setState({
+	// 		filter: {
+	// 			name: filterName.toLowerCase(),
+	// 			status: filterStatus,
+	// 		}
+	// 	})
+	// }
 
 	onSearch = (keyword) => {
 		this.setState({
@@ -301,7 +301,7 @@ class App extends Component {
 							// onUpdateStatus={this.onUpdateStatus} do sử dụng redux
 							// onDelete={this.onDelete} do sử dụng redux
 							// onUpdate={this.onUpdate} do sử dụng redux
-							onFilter={this.onFilter}
+							// onFilter={this.onFilter}
 						/>
 					</div>
 				</div>

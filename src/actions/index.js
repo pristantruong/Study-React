@@ -1,6 +1,6 @@
 import * as types from './../constants/actionTypes'
 
-export const listAll = () =>{
+export const listAll = () => {
     return {
         type: types.LIST_ALL
     }
@@ -49,5 +49,12 @@ export const editTask = (task) => {
     return {
         type: types.EDIT_TASK,
         task
+    }
+}
+
+export const filterTask = (filter) => {
+    return {
+        type: types.FILTER_TABLE,
+        filter // gồm filterName và filterStatus 
     }
 }

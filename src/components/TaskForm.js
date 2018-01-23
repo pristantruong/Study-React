@@ -28,8 +28,6 @@ class TaskForm extends Component {
     
     componentWillMount() {
         if (this.props.itemEditing && this.props.itemEditing.id != null){
-            console.log(this.props.itemEditing);
-            
             this.setState({
                 id: this.props.itemEditing.id,
                 name: this.props.itemEditing.name,
