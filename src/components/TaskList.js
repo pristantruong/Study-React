@@ -16,10 +16,6 @@ class TaskList extends Component {
         var target = event.target;
         var name = target.name;
         var value = target.value;
-        // this.props.onFilter( //do sử dụng redux
-        //     name === 'filterName' ? value : this.state.filterName,
-        //     name === 'filterStatus' ? value : this.state.filterStatus,
-        // )
         var filter = {
             name: name === 'filterName' ? value : this.state.filterName,
             status: name === 'filterStatus' ? value : this.state.filterStatus,
@@ -32,8 +28,6 @@ class TaskList extends Component {
 
     render() {
         var { tasks, filterTable, keyword, sort } = this.props; // var tasks = this.props.tasks
-        console.log(sort);
-        
         //filter on Table
         if (filterTable.name) {
             tasks = tasks.filter((task) => {
@@ -73,12 +67,7 @@ class TaskList extends Component {
             return <TaskItem
                 key={task.id}
                 index={index}
-                task={task}
-            // onUpdateStatus={this.props.onUpdateStatus} do sử dụng redux
-            //this.props.onDelete là gọi từ thằng App.js (onDelete=....)
-            // onDelete={this.props.onDelete} do sử dụng redux
-            // onUpdate={this.props.onUpdate} do sử dụng redux
-            />
+                task={task}/>
         });
         return (
             <table className="table table-bordered table-hover mt-15">

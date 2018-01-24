@@ -1,7 +1,7 @@
 import * as types from './../constants/actionTypes'
 
 var initialState = {
-    by: '',
+    by: 'name',
     value: 1 //1: tăng, -1: giảm
 }; //state lúc này là 1 object
 var myReducer = (state = initialState, action) => {

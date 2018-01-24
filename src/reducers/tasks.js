@@ -31,7 +31,7 @@ var myReducer = (state = initialState, action) => {
             var task = {
                 id: action.task.id, //có thể rỗng hoặc có gt
                 name: action.task.name,
-                status: action.task.status
+                status: (action.task.status === 'true' || action.task.status === true) ? true : false  
             };
             if (!task.id) {
                  task.id = generateID();

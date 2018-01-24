@@ -7,25 +7,11 @@ class TaskForm extends Component {
         super(props);
         this.state = {
             id: '',
-            //name phải trùng với input
             name: '',
             status: true,
         }
     }
-    //khi form hiển thị life cycle sẽ được gọi
-    // componentWillMount(){
-    //     // nhận từ task trong TaskForm ở App.js
-    //     if (this.props.task){
-    //         this.setState({
-    //             id : this.props.task.id,
-    //             name : this.props.task.name,
-    //             status : this.props.task.status
-    //         });
-    //         //console.log(this.state);
-    //     }
-    // }
-
-    
+    //khi form hiển thị life cycle sẽ được gọi    
     componentWillMount() {
         if (this.props.itemEditing && this.props.itemEditing.id != null){ 
             this.setState({
@@ -37,28 +23,8 @@ class TaskForm extends Component {
             this.onClear();
         }
     }
-    
 
     // vẫn chạy ngay khi form đã hiển thị 
-    // componentWillReceiveProps(nextProps){
-    //     console.log(nextProps);
-    //     ;
-        
-    //     if (nextProps && nextProps.task){
-    //         this.setState({
-    //             id: nextProps.task.id,
-    //             name: nextProps.task.name,
-    //             status: nextProps.task.status
-    //         });
-    //     }else if (!nextProps.task){
-    //         this.setState({
-    //             id: '',
-    //             name: '',
-    //             status: true,
-    //         });
-    //     }
-    // }
-
     componentWillReceiveProps(nextProps) { 
         if (nextProps && nextProps.itemEditing) {
             this.setState({
@@ -72,8 +38,6 @@ class TaskForm extends Component {
     }
 
     onCloseForm = () =>{
-        // lấy từ <TaskForm onCloseForm =..../>
-        // this.props.onCloseForm();
         this.props.onCloseForm(); //lấy từ store
     }
 
@@ -88,17 +52,7 @@ class TaskForm extends Component {
             [name]: value
         })
     }
-
-    // onSubmit = (event) =>{
-    //     //hàm giữ lại biến event không cho load lại trang
-    //     event.preventDefault();
-    //     // this.props.onSubmit(this.state); do sử dụng redux
-    //     this.props.onAddTask(this.state);
-    //     //hủy bỏ và close form
-    //     this.onClear();
-    //     this.onCloseForm(); 
-    // }
-
+     
     onSubmit = (event) => {
         //hàm giữ lại biến event không cho load lại trang
         event.preventDefault();
@@ -137,6 +91,7 @@ class TaskForm extends Component {
                                 className="form-control"
                                 //name phải trùng với state
                                 name="name" 
+                                required
                                 value={this.state.name}
                                 onChange={this.onChange}/>
                         </div>
