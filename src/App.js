@@ -197,11 +197,14 @@ class App extends Component {
 		// console.log('sortby2', sortBy);
 		// console.log('sortValue2', sortValue);
 		if (sortBy) {
+			console.log(sortValue);
 			tasks.sort((a, b) => {
-				if (a.name > b.name) return sortValue;
+				if (a.name > b.name) {
+					return sortValue;
+				} 
 				else if (a.name < b.name) return -sortValue;
 				else return 0;
-			})
+			})	;				
 		// } else {
 		// 	tasks.sort((a, b) => {
 		// 		if (a.status > b.status) return -sortValue;
