@@ -8,21 +8,21 @@ import * as actions from './actions/index';
 
 class App extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			// tasks: [], k cần sử dụng do đã dùng redux
-			// isDisplayForm: false, //id: không trùng (do dùng redux)
-			// taskEditing: null, do sử dụng redux
-			// filter: { 
-			// 	name: '',
-			// 	status: -1
-			// },
-			keyword: '',
-			sortBy: 'name',
-			sortValue: 1
-		}
-	}
+	// constructor(props) { do sử dụng redux
+	// 	super(props);
+	// 	this.state = {
+	// 		// tasks: [], k cần sử dụng do đã dùng redux
+	// 		// isDisplayForm: false, //id: không trùng (do dùng redux)
+	// 		// taskEditing: null, do sử dụng redux
+	// 		// filter: { 
+	// 		// 	name: '',
+	// 		// 	status: -1
+	// 		// },
+	// 		// keyword: '',
+	// 		sortBy: 'name',
+	// 		sortValue: 1
+	// 	}
+	// }
 	// chỉ gọi 1 lần, không cần sử dụng do đã gọi redux 
 	// componentWillMount() {
 	// 	if (localStorage && localStorage.getItem('tasks')) {
@@ -96,11 +96,11 @@ class App extends Component {
 		});
 	}
 
-	onShowForm = () => {
-		this.setState({
-			isDisplayForm: true
-		})
-	}
+	// onShowForm = () => {
+	// 	this.setState({
+	// 		isDisplayForm: true
+	// 	})
+	// }
 
 	// onCloseForm = () => { //do sủ dụng redux
 	// 	this.setState({
@@ -191,35 +191,35 @@ class App extends Component {
 	// 	})
 	// }
 
-	onSearch = (keyword) => {
-		this.setState({
-			keyword: keyword
-		})
-	}
+	// onSearch = (keyword) => {
+	// 	this.setState({
+	// 		keyword: keyword
+	// 	})
+	// }
 
-	onSort = (sortBy, sortValue) => {
-		var { tasks } = this.state;
-		this.setState({
-			sort: {
-				sortBy: sortBy,
-				sortValue: sortValue
-			}
-		})
-		if (sortBy) {
-			tasks.sort((a, b) => {
-				if (a.name > b.name) return sortValue;
-				else if (a.name < b.name) return -sortValue;
-				else return 0;
-			})
-		} else {
-			tasks.sort((a, b) => {
-				if (a.status > b.status) return -sortValue;
-				else if (a.status < b.status) return sortValue;
-				else return 0;
-			})
-		}
+	// onSort = (sortBy, sortValue) => {
+	// 	var { tasks } = this.state;
+	// 	this.setState({
+	// 		sort: {
+	// 			sortBy: sortBy,
+	// 			sortValue: sortValue
+	// 		}
+	// 	})
+	// 	if (sortBy) {
+	// 		tasks.sort((a, b) => {
+	// 			if (a.name > b.name) return sortValue;
+	// 			else if (a.name < b.name) return -sortValue;
+	// 			else return 0;
+	// 		})
+	// 	} else {
+	// 		tasks.sort((a, b) => {
+	// 			if (a.status > b.status) return -sortValue;
+	// 			else if (a.status < b.status) return sortValue;
+	// 			else return 0;
+	// 		})
+	// 	}
 
-	}
+	// }
 	render() {
 		//khai báo theo kiểu es6
 		// var {
@@ -292,10 +292,11 @@ class App extends Component {
 
 						{/* Search */}
 						<SearchSort
-							onSearch={this.onSearch}
-							onSort={this.onSort}
-							sortBy={this.state.sortBy}
-							sortValue={this.state.sortValue} />
+							// onSearch={this.onSearch}
+							// onSort={this.onSort}
+							// sortBy={this.state.sortBy}
+							// sortValue={this.state.sortValue} 
+						/>
 						{/* truyền props vào TaskList hứng lại function từ con truyền ra cha*/}
 						<TaskList
 							// onUpdateStatus={this.onUpdateStatus} do sử dụng redux

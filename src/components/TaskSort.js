@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './../actions/index';
+
 class Sort extends Component {
 
     onClick = (sortBy, sortValue) => { 
-        this.props.onSort(sortBy, sortValue)
+        this.props.onSort({
+            by: sortBy,
+            value: sortValue
+        });
     }
-
-    componentWillReceiveProps(nextProps) {
-    
-    } 
 
     render() {
         return (
@@ -20,7 +22,7 @@ class Sort extends Component {
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="true"
-                        onClick={() => this.onClick('test', 1)}
+                        onClick={() => this.onClick('name', 1)}
                     >
                         A-Z <span className="fa fa-caret-square-o-down ml-5"></span>
                     </button>
@@ -35,7 +37,7 @@ class Sort extends Component {
                     >
                         Z-A <span className="fa fa-caret-square-o-down ml-5"></span>
                     </button>
-                    {/* <button
+                    <button
                         type="button"
                         className="btn btn-primary dropdown-toggle mr-5"
                         id="dropdownMenu1"
@@ -44,7 +46,7 @@ class Sort extends Component {
                         aria-expanded="true"
                         onClick={() => this.onClick('status', 1)}
                     >
-                        Inv <span className="fa fa-caret-square-o-down ml-5"></span>
+                        Act <span className="fa fa-caret-square-o-down ml-5"></span>
                     </button>
                     <button
                         type="button"
@@ -55,10 +57,10 @@ class Sort extends Component {
                         aria-expanded="true"
                         onClick={() => this.onClick('status', -1)}
                     >
-                        Act <span className="fa fa-caret-square-o-down ml-5"></span>
-                    </button> */
-                    /* <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        {/* có arrow function mới truyền tham số được 
+                        Inv <span className="fa fa-caret-square-o-down ml-5"></span>
+                    </button> 
+                     {/* <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+                       có arrow function mới truyền tham số được 
                         <li onClick={() => this.onClick('name', 1)}>
                             <a role="button" className="sort_selected">
                                 <span className="fa fa-sort-alpha-asc pr-5">
@@ -87,11 +89,26 @@ class Sort extends Component {
                     </ul> */}
 
                 </div>
-
-              
             </div>
         );
     }
 }
 
-export default Sort;
+// tạo kết nối để lấy state từ store về biến state đc khai báo lấy từ store
+const mapStateToProps = state => {
+    return {
+        sort: state.sort //trong file index.js (actions)
+    };
+};
+
+const mapDispatchToProps = (dispatch, props) => { //dispatch giúp thực thi 1 hành độg và props
+    return {
+        onSort: (sort) => { //sort.by và sort.value
+            dispatch(actions.sortTask(sort));
+        }
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sort);
+
+

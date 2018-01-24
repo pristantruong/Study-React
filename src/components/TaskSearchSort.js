@@ -10,9 +10,10 @@ class SearchSort extends Component {
                 />
                 {/* Sort */}
                 <TaskSort
-                    onSort={this.props.onSort}
-                    sortBy={this.props.sortBy}
-                    sortValue={this.props.sortValue} />
+                    // onSort={this.props.onSort} // do sử dụng redux
+                    // sortBy={this.props.sortBy}
+                    // sortValue={this.props.sortValue} 
+                />
             </div>
         );
     }

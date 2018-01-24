@@ -65,3 +65,10 @@ export const searchTask = (keyword) => {
         keyword // keyword là kiểu string khai báo bên search(reducers)
     }
 }
+
+export const sortTask = (sort) => {
+    return {
+        type: types.SORT,
+        sort // sort.by và sort.value
+    }
+}
