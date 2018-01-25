@@ -171,7 +171,12 @@ class App extends Component {
 				name: filterName.toLowerCase(),
 				status: filterStatus,
 			}
-		})
+		});
+		console.log('filter',this.state.filter);
+		console.log('name', filterName);
+		console.log('status', filterStatus);
+		
+		
 	}
 	render() {
 		//khai báo theo kiểu es6
@@ -180,9 +185,13 @@ class App extends Component {
 		if (filter) {
 			//filter name
 			if (filter.name) {
+				console.log('log name',filter.name);
+				
 				tasks = tasks.filter((task) => {
+					console.log('log task',task.name.toLowerCase().indexOf(filter.name));
+					
 					return task.name.toLowerCase().indexOf(filter.name) !== -1;
-				});
+				});	
 			}
 			//filter status
 			tasks = tasks.filter((task) => {
@@ -244,3 +253,7 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+
