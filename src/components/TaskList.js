@@ -21,7 +21,7 @@ class TaskList extends Component {
         )
         this.setState({
             [name]: value
-        })
+        })    
     }
 
     render() {

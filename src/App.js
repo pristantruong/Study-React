@@ -192,7 +192,8 @@ class App extends Component {
 					
 					return task.name.toLowerCase().indexOf(filter.name) !== -1;
 				});	
-			}
+			};
+			return tasks;
 			//filter status
 			tasks = tasks.filter((task) => {
 				if (filter.status === -1) {
